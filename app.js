@@ -38,8 +38,8 @@ function getFromClient(request, response) {
     fs.readFile('./index.html', 'UTF-8',
         (error, data) => {
             var content = data.
-                replace(/dummy_title/g, 'タイトルです').
-                replace(/dummy_content/g, 'これがコンテンツです。');
+                replace(/dummy_title/g, 'BlockChain-ART-Collection').
+                replace(/dummy_content/g, '☺️☺️');
 
             response.writeHead(200, { 'Content-Type': 'text/html' });
             response.write(content);
