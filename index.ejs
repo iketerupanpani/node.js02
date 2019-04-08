@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title><%=title %></title>
-    <style>
+    <!-- <style>
         h1 {
             font-size: 60pt;
             color: #eee;
@@ -17,7 +17,8 @@
             color: #999;
             margin: 5px;
         }
-    </style>
+    </style> -->
+    <link type="text/css" href="./style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -25,8 +26,10 @@
     <head>
         <h1><%=title %></h1>
     </head>
-    <div role="main"></div>
-    <p><%=content %></p>
+    <div role="main">
+        <p><%=content %></p>
+        <p><a href="/other">Other Pageに移動 &gt;&gt;</a></p>
+    </div>
 </body>
 
 </html>
