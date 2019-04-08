@@ -12,6 +12,7 @@ const url = require('url');
 //テンプレートファイルの読み込み **readFileSync=同期処理**
 const index_page = fs.readFileSync('./index.ejs', 'utf8');
 const other_page = fs.readFileSync('./other.ejs', 'utf8');
+const home_page = fs.readFileSync('./home.ejs', 'utf8');
 const style_css = fs.readFileSync('./style.css', 'utf8');
 
 //サーバーオブジェクトを作る　 **変数＝http.createServer(関数);**
@@ -48,20 +49,20 @@ console.log('Server start!');
 
 //createServerの処理
 
-// function getFromClient(request, response) {
-//     fs.readFile('./index.html', 'UTF-8',
-//         (error, data) => {
-//             var content = data.
-//                 //replace=検索置換
-//                 replace(/dummy_title/g, 'BlockChain-ART-Collection').
-//                 replace(/dummy_content/g, '☺️☺️');
+function getFromClient(request, response) {
+    fs.readFile('./index.ejs', 'UTF-8',
+        (error, data) => {
+            var content = data.
+                //replace=検索置換
+                // replace(/dummy_title/g, 'BlockChain-ART-Collection').
+                // replace(/dummy_content/g, '☺️☺️');
 
-//             response.writeHead(200, { 'Content-Type': 'text/html' });
-//             response.write(content);
-//             response.end();
-//         }
-//     );
-// }
+                response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
+        }
+    );
+}
 
 function getFromClient(request, response) {
 
@@ -84,6 +85,13 @@ function getFromClient(request, response) {
                 title: "Other",
                 content: "これは新しく用意したページです。",
             });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
+            break;
+
+        case '/home':
+            var content = ejs.render(home_page);
             response.writeHead(200, { 'Content-Type': 'text/html' });
             response.write(content);
             response.end();
