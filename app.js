@@ -1,10 +1,18 @@
-//インターネットアクセルする「http」というオブジェクトを読み込む。
-//変数＝require(ID(モジュール))
+//インターネットアクセルする「http」というオブジェクトを読み込む。**変数＝require(ID(モジュール))
 const http = require('http');
+
 const fs = require('fs');
-//サーバーオブジェクトを作る
-//変数＝http.createServer(関数);
+
+//ejsオブジェクトの読み込み
+const ejs = require('ejs');
+
+//テンプレートファイルの読み込み **readFileSync=同期処理**
+const index_page = fs.readFileSync('./index.ejs', 'utf8');
+
+//サーバーオブジェクトを作る　 **変数＝http.createServer(関数);**
 var server = http.createServer(getFromClient);
+
+
 //request=クライアントからサーバーへの要求
 //response=サーバーからクライアントへの返信
 // (request, response) => {
@@ -34,16 +42,29 @@ server.listen(3000);
 console.log('Server start!');
 
 //createServerの処理
-function getFromClient(request, response) {
-    fs.readFile('./index.html', 'UTF-8',
-        (error, data) => {
-            var content = data.
-                replace(/dummy_title/g, 'BlockChain-ART-Collection').
-                replace(/dummy_content/g, '☺️☺️');
+// function getFromClient(request, response) {
+//     fs.readFile('./index.html', 'UTF-8',
+//         (error, data) => {
+//             var content = data.
+//                 //replace=検索置換
+//                 replace(/dummy_title/g, 'BlockChain-ART-Collection').
+//                 replace(/dummy_content/g, '☺️☺️');
 
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.write(content);
-            response.end();
-        }
-    );
+//             response.writeHead(200, { 'Content-Type': 'text/html' });
+//             response.write(content);
+//             response.end();
+//         }
+//     );
+// }
+
+function getFromClient(request, response) {
+
+    //レンダリングの実行
+    var content = ejs.render(index_page, {
+        title: "Index",
+        content: "これはテンプレートを使ったサンプルページです。",
+    });
+    response.writeHead(200, { 'Content-Type': 'text-html' });
+    response.write(content);
+    response.end();
 }
