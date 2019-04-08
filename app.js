@@ -13,6 +13,7 @@ const url = require('url');
 const index_page = fs.readFileSync('./index.ejs', 'utf8');
 const other_page = fs.readFileSync('./other.ejs', 'utf8');
 const style_css = fs.readFileSync('./style.css', 'utf8');
+
 //サーバーオブジェクトを作る　 **変数＝http.createServer(関数);**
 var server = http.createServer(getFromClient);
 
@@ -46,6 +47,7 @@ server.listen(3000);
 console.log('Server start!');
 
 //createServerの処理
+
 // function getFromClient(request, response) {
 //     fs.readFile('./index.html', 'UTF-8',
 //         (error, data) => {
@@ -67,8 +69,6 @@ function getFromClient(request, response) {
     switch (url_parts.pathname) {
 
         case '/':
-
-
             //レンダリングの実行
             var content = ejs.render(index_page, {
                 title: "Index",
@@ -88,7 +88,6 @@ function getFromClient(request, response) {
             response.write(content);
             response.end();
             break;
-
 
         case '/style.css':
             response.writeHead(200, { 'Content-Type': 'text/css' });
