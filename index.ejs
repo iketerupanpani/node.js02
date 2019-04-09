@@ -24,21 +24,23 @@
                 </tr>
             </table>
         </p>
-        <p>
-            <form method="post" action="/">
-                MESSAGE <input type="text" name="msg">
-                <input type="submit" value="送信">
-            </form>
-        </p>
+        <p>your last message:<%= cookie_data %></p>
 
-        <input type="button" onclick="location.href='/other'" value="OTHER">
-        <input type="button" onclick="location.href='/home'" value="HOME">
-        <form method="post" action="/other">
-            <p>
-                <input type="text" name="msg">
-                <input type="submit" value="CLICK">
-            </p>
-        </form>
+        <form method="post" action="/">
+            <p> MESSAGE <input type="text" name="msg">
+                <input type="submit" value="送信"></p>
+
+
+
+            <input type="button" onclick="location.href='/other'" value="OTHER">
+            <input type="button" onclick="location.href='/home'" value="HOME">
+            <input type="button" onclick="location.href='/skateart'" value="SKATEART">
+            <form method="post" action="/other">
+                <p>
+                    <input type="text" name="msg">
+                    <input type="submit" value="CLICK">
+                </p>
+            </form>
 
     </div>
 </body>
