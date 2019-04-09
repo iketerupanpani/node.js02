@@ -12,11 +12,17 @@
     <head>
         <h1><%=title %></h1>
     </head>
-    <div role="main"></div>
-    <p><%=content %></p>
-    <input type="button" onclick="location.href='/'" value="INDEX">
-    <input type="button" onclick="location.href='/home'" value="HOME">
-
+    <div role="main">
+        <p>
+            <table>
+                <% for(var key in data) { %>
+                <%- include('data_item',{key:key,val:data[key]}) %>
+                <% } %>
+            </table>
+        </p>
+        <input type="button" onclick="location.href='/'" value="INDEX">
+        <input type="button" onclick="location.href='/home'" value="HOME">
+    </div>
 </body>
 
 </html>

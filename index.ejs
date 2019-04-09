@@ -14,15 +14,32 @@
     </head>
     <div role="main">
         <p><%=content %></p>
+        <p>
+            <table style="width:400px;">
+                <tr>
+                    <th>管理人より</th>
+                </tr>
+                <tr>
+                    <td><%=data.msg %></td>
+                </tr>
+            </table>
+        </p>
+        <p>
+            <form method="post" action="/">
+                MESSAGE <input type="text" name="msg">
+                <input type="submit" value="送信">
+            </form>
+        </p>
 
+        <input type="button" onclick="location.href='/other'" value="OTHER">
+        <input type="button" onclick="location.href='/home'" value="HOME">
         <form method="post" action="/other">
             <p>
                 <input type="text" name="msg">
                 <input type="submit" value="CLICK">
             </p>
         </form>
-        <input type="button" onclick="location.href='/other'" value="OTHER">
-        <input type="button" onclick="location.href='/home'" value="HOME">
+
     </div>
 </body>
 

@@ -19,5 +19,20 @@ h4{
     color: #eee;
     text-align: right;
     margin: 0px;
+}
+table{
+    margin:20px;
+}
+table tr th{
+    background-color: #eee;
+    color:#666;
+    text-align: center;
+    padding: 3px 10px;
+}
+table tr td{
+    background-color: #eee;
+    color:#666;
+    text-align: left;
+    padding: 3px 10px;
 
 }
