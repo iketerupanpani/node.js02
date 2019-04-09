@@ -3,24 +3,27 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Home</title>
+    <title><%=title %></title>
     <link type="text/css" href="./style.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>BlockChain-ART-Collection</h1>
-    <p>☺️ARTIST☺️</p>
-    <form method="post" action="/result">
-        <p>
-            <input type="text" name="artist">
-            <input type="submit" value="SEARCH">
-        </p>
-    </form>
-    <input type="button" onclick="location.href='/other'" value="OTHER">
-    <input type="button" onclick="location.href='/'" value="INDEX">
-    <!-- <p><a href="/other">Other Pageに移動 &gt;&gt;</a></p>
-    <p><a href="/index">Index Pageに移動 &gt;&gt;</a></p> -->
 
+    <head>
+        <h1><%=title %></h1>
+    </head>
+    <div role="main">
+        <p><%=content %></p>
+
+        <form method="post" action="/result">
+            <p>
+                <input type="text" name="msg">
+                <input type="submit" value="SEARCH">
+            </p>
+        </form>
+        <input type="button" onclick="location.href='/other'" value="OTHER">
+        <input type="button" onclick="location.href='/'" value="INDEX">
+    </div>
 </body>
 
 </html>

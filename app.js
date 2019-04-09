@@ -1,3 +1,5 @@
+
+
 //インターネットアクセルする「http」というオブジェクトを読み込む。**変数＝require(ID(モジュール))
 const http = require('http');
 const fs = require('fs');
@@ -7,14 +9,17 @@ const ejs = require('ejs');
 
 //スタイルシートの読み込み処理を追加する
 const url = require('url');
+
 //querystringモジュールのロード
 const qs = require('querystring');
+
 //テンプレートファイルの読み込み **readFileSync=同期処理**
 const index_page = fs.readFileSync('./index.ejs', 'utf8');
 const other_page = fs.readFileSync('./other.ejs', 'utf8');
 const home_page = fs.readFileSync('./home.ejs', 'utf8');
 const result_page = fs.readFileSync('./result.ejs', 'utf8');
 const style_css = fs.readFileSync('./style.css', 'utf8');
+
 //サーバーオブジェクトを作る **変数＝http.createServer(関数);**
 var server = http.createServer(getFromClient);
 
@@ -99,21 +104,24 @@ function getFromClient(request, response) {
             response_other(request, response);
             break;
 
-        case '/result':
-            var content = ejs.render(result_page, {
-                title: "Result",
-                content: "これは検索結果が出るページです。",
-            });
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.write(content);
-            response.end();
+        case '/home':
+            // var content = ejs.render(home_page);
+            // response.writeHead(200, { 'Content-Type': 'text/html' });
+            // response.write(content);
+            // response.end();
+            response_home(request, response);
             break;
 
-        case '/home':
-            var content = ejs.render(home_page);
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.write(content);
-            response.end();
+
+        case '/result':
+            // var content = ejs.render(result_page, {
+            //     title: "Result",
+            //     content: "これは検索結果が出るページです。",
+            // });
+            // response.writeHead(200, { 'Content-Type': 'text/html' });
+            // response.write(content);
+            // response.end();
+            response_result(request, response);
             break;
 
         case '/style.css':
@@ -171,6 +179,58 @@ function response_other(request, response) {
         var msg = "ページがありません。"
         var content = ejs.render(other_page, {
             title: "Other",
+            content: msg,
+        });
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.write(content);
+        response.end();
+
+    }
+}
+
+//★homeのアクセス処理
+function response_home(request, response) {
+    var msg = "ARTIST"
+    var content = ejs.render(home_page, {
+        title: "BlockChain-ART-Collection",
+        content: msg,
+    });
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.write(content);
+    response.end();
+}
+
+//★resultのアクセス処理
+function response_result(request, response) {
+    var msg = "検索結果　："
+
+    //POSTアクセス時の処理
+    if (request.method == 'POST') {
+        var body = '';
+
+        //データ受信のイベント処理
+        request.on('data', (data) => {
+            body += data;
+        });
+
+        //データ受信終了のイベント処理
+        request.on('end', () => {
+            var post_data = qs.parse(body); //データのパース
+            msg += post_data.msg;
+            var content = ejs.render(result_page, {
+                title: "Result",
+                content: msg,
+            });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
+        });
+
+        //GETアクセス時の処理
+    } else {
+        var msg = "HOMEに戻り、再度検索してください。"
+        var content = ejs.render(result_page, {
+            title: "Result",
             content: msg,
         });
         response.writeHead(200, { 'Content-Type': 'text/html' });
