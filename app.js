@@ -18,6 +18,9 @@ const index_page = fs.readFileSync('./index.ejs', 'utf8');
 const other_page = fs.readFileSync('./other.ejs', 'utf8');
 const home_page = fs.readFileSync('./home.ejs', 'utf8');
 const result_page = fs.readFileSync('./result.ejs', 'utf8');
+const skateart_page = fs.readFileSync('./skateart.ejs', 'utf8');
+const shop_page = fs.readFileSync('./shop.ejs', 'utf8');
+const news_page = fs.readFileSync('./news.ejs', 'utf8');
 const style_css = fs.readFileSync('./style.css', 'utf8');
 
 //サーバーオブジェクトを作る **変数＝http.createServer(関数);**
@@ -122,6 +125,33 @@ function getFromClient(request, response) {
             // response.write(content);
             // response.end();
             response_result(request, response);
+            break;
+
+        case '/skateart':
+            var content = ejs.render(skateart_page, {
+                title: "Skateart",
+            });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
+            break;
+
+        case '/news':
+            var content = ejs.render(news_page, {
+                title: "news",
+            });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
+            break;
+
+        case '/shop':
+            var content = ejs.render(shop_page, {
+                title: "Shop",
+            });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
             break;
 
         case '/style.css':
