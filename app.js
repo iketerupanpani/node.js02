@@ -1,6 +1,5 @@
 //インターネットアクセルする「http」というオブジェクトを読み込む。**変数＝require(ID(モジュール))
 const http = require('http');
-
 const fs = require('fs');
 
 //ejsオブジェクトの読み込み
@@ -8,14 +7,15 @@ const ejs = require('ejs');
 
 //スタイルシートの読み込み処理を追加する
 const url = require('url');
-
+//querystringモジュールのロード
+const qs = require('querystring');
 //テンプレートファイルの読み込み **readFileSync=同期処理**
 const index_page = fs.readFileSync('./index.ejs', 'utf8');
 const other_page = fs.readFileSync('./other.ejs', 'utf8');
 const home_page = fs.readFileSync('./home.ejs', 'utf8');
+const result_page = fs.readFileSync('./result.ejs', 'utf8');
 const style_css = fs.readFileSync('./style.css', 'utf8');
-
-//サーバーオブジェクトを作る　 **変数＝http.createServer(関数);**
+//サーバーオブジェクトを作る **変数＝http.createServer(関数);**
 var server = http.createServer(getFromClient);
 
 
@@ -49,41 +49,60 @@ console.log('Server start!');
 
 //createServerの処理
 
+// function getFromClient(request, response) {
+//     fs.readFile('./index.ejs', 'UTF-8',
+//         (error, data) => {
+//             var content = data.
+//                 //replace=検索置換
+//                 // replace(/dummy_title/g, 'BlockChain-ART-Collection').
+//                 // replace(/dummy_content/g, '☺️☺️');
+//                 response.writeHead(200, { 'Content-Type': 'text/html' });
+//             response.write(content);
+//             response.end();
+//         }
+//     );
+// }
+
 function getFromClient(request, response) {
-    fs.readFile('./index.ejs', 'UTF-8',
-        (error, data) => {
-            var content = data.
-                //replace=検索置換
-                // replace(/dummy_title/g, 'BlockChain-ART-Collection').
-                // replace(/dummy_content/g, '☺️☺️');
 
-                response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.write(content);
-            response.end();
-        }
-    );
-}
+    var url_parts = url.parse(request.url, true);
 
-function getFromClient(request, response) {
 
-    var url_parts = url.parse(request.url);
     switch (url_parts.pathname) {
 
         case '/':
-            //レンダリングの実行
-            var content = ejs.render(index_page, {
-                title: "Index",
-                content: "これはテンプレートを使ったサンプルページです。",
-            });
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.write(content);
-            response.end();
+            // var content = "これはIndexページです。"
+            // var query = url_parts.query;
+            // if (query.msg != undefined) {
+            //     var query_obj =
+            //         content += 'あなたは、「' + query.msg + '」と送りました。';
+            // }
+            // //レンダリングの実行
+            // var content = ejs.render(index_page, {
+            //     title: "Index",
+            //     content: content,
+            // });
+            // response.writeHead(200, { 'Content-Type': 'text/html' });
+            // response.write(content);
+            // response.end();
+            response_index(request, response);
             break;
 
         case '/other':
-            var content = ejs.render(other_page, {
-                title: "Other",
-                content: "これは新しく用意したページです。",
+            // var content = ejs.render(other_page, {
+            //     title: "Other",
+            //     content: "これは新しく用意したページです。",
+            // });
+            // response.writeHead(200, { 'Content-Type': 'text/html' });
+            // response.write(content);
+            // response.end();
+            response_other(request, response);
+            break;
+
+        case '/result':
+            var content = ejs.render(result_page, {
+                title: "Result",
+                content: "これは検索結果が出るページです。",
             });
             response.writeHead(200, { 'Content-Type': 'text/html' });
             response.write(content);
@@ -109,4 +128,54 @@ function getFromClient(request, response) {
             break;
     }
 
+}
+//★indexのアクセス処理
+function response_index(request, response) {
+    var msg = "これはIndexページです。"
+    var content = ejs.render(index_page, {
+        title: "Index",
+        content: msg,
+    });
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.write(content);
+    response.end();
+}
+//★otherのアクセス処理
+function response_other(request, response) {
+    var msg = "これはOtherページです。"
+
+    //POSTアクセス時の処理
+    if (request.method == 'POST') {
+        var body = '';
+
+        //データ受信のイベント処理
+        request.on('data', (data) => {
+            body += data;
+        });
+
+        //データ受信終了のイベント処理
+        request.on('end', () => {
+            var post_data = qs.parse(body); //データのパース
+            msg += 'あなたは、「' + post_data.msg + '」と書きました。';
+            var content = ejs.render(other_page, {
+                title: "Other",
+                content: msg,
+            });
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
+        });
+
+        //GETアクセス時の処理
+    } else {
+        var msg = "ページがありません。"
+        var content = ejs.render(other_page, {
+            title: "Other",
+            content: msg,
+        });
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.write(content);
+        response.end();
+
+    }
 }

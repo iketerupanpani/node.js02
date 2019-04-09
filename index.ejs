@@ -14,12 +14,16 @@
     </head>
     <div role="main">
         <p><%=content %></p>
-        <input type="button" onclick="location.href='/other'" value="Other Pageに移動">
-        <input type="button" onclick="location.href='/home'" value="Home Pageに移動">
-
+        <input type="button" onclick="location.href='/other'" value="OTHER">
+        <input type="button" onclick="location.href='/home'" value="HOME">
         <!-- <p><a href="/other">Other Pageに移動 &gt;&gt;</a></p>
         <p><a href="/home">Home Pageに移動 &gt;&gt;</a></p> -->
-
+        <form method="post" action="/other">
+            <p>
+                <input type="text" name="msg">
+                <input type="submit" value="click">
+            </p>
+        </form>
     </div>
 </body>
 

@@ -9,11 +9,15 @@
 
 <body>
     <h1>BlockChain-ART-Collection</h1>
-    <p>☺️☺️</p>
-    <input type="text">
-    <button>SEARCH</button>
-    <input type="button" onclick="location.href='/other'" value="Other Pageに移動">
-    <input type="button" onclick="location.href='/'" value="index Pageに移動">
+    <p>☺️ARTIST☺️</p>
+    <form method="post" action="/result">
+        <p>
+            <input type="text" name="artist">
+            <input type="submit" value="SEARCH">
+        </p>
+    </form>
+    <input type="button" onclick="location.href='/other'" value="OTHER">
+    <input type="button" onclick="location.href='/'" value="INDEX">
     <!-- <p><a href="/other">Other Pageに移動 &gt;&gt;</a></p>
     <p><a href="/index">Index Pageに移動 &gt;&gt;</a></p> -->
 
